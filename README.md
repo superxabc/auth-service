@@ -5,93 +5,90 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-green.svg)](https://fastapi.tiangolo.com/)
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
 
-A scalable microservice for user authentication, management, and multi-tenant support built with FastAPI.
-
 一个基于FastAPI构建的可扩展用户认证微服务，支持多租户和多种认证方式。
 
-## ✨ Features / 功能特性
+## ✨ 功能特性
 
-- 🔐 **Multiple Authentication Methods** - Email/Password, Phone/SMS, WeChat, QQ, Google OAuth
-- 🔑 **JWT Token Management** - Secure token-based authentication with refresh mechanism
-- 🏢 **Multi-tenant Support** - Complete tenant isolation with configurable quotas
-- 👤 **User Profile Management** - Comprehensive user data and interest profiling
-- ⚡ **High Performance** - Redis caching, connection pooling, async operations
-- 📊 **Monitoring & Health Checks** - Built-in metrics, logging, and health endpoints
-- 🛡️ **Security Features** - Rate limiting, CORS, input validation, SQL injection protection
-- 🐳 **Docker Ready** - Containerized deployment with Docker Compose support
+- 🔐 **多种认证方式** - 邮箱/密码、手机/短信、微信、QQ、Google OAuth
+- 🔑 **JWT令牌管理** - 安全的基于令牌的认证和刷新机制
+- 🏢 **多租户支持** - 完整的租户隔离和可配置配额
+- 👤 **用户资料管理** - 全面的用户数据和兴趣画像
+- ⚡ **高性能** - Redis缓存、连接池、异步操作
+- 📊 **监控与健康检查** - 内置指标、日志和健康检查端点
+- 🛡️ **安全特性** - 限流、CORS、输入验证、SQL注入防护
+- 🐳 **Docker就绪** - 支持Docker Compose的容器化部署
 
-## 🚀 Quick Start / 快速开始
+## 🚀 快速开始
 
-### Development Environment / 开发环境
+### 开发环境
 
-1. **Clone and install dependencies / 克隆仓库并安装依赖**:
+1. **克隆仓库并安装依赖**:
    ```bash
    git clone https://github.com/superxabc/auth-service.git
    cd auth-service
    pip install -r requirements.txt
    ```
 
-2. **Configure environment / 配置环境变量**:
+2. **配置环境变量**:
    ```bash
    cp env.example .env
-   # Edit .env file with your database and Redis settings
    # 编辑.env文件配置数据库和Redis连接
    ```
 
-3. **Start the service / 启动服务**:
+3. **启动服务**:
    ```bash
-   # Development mode / 开发模式
+   # 开发模式
    uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
    ```
 
-4. **Access the API / 访问API**:
-   - API Documentation: http://localhost:8001/docs
-   - Health Check: http://localhost:8001/api/health
+4. **访问API**:
+   - API文档: http://localhost:8001/docs
+   - 健康检查: http://localhost:8001/api/health
 
-### Docker Deployment / Docker部署
+### Docker部署
 
 ```bash
-# Build and run with Docker
+# 使用Docker构建和运行
 docker build -t auth-service .
 docker run -p 8001:8001 auth-service
 ```
 
-### Production Deployment / 生产部署
+### 生产部署
 
-For production deployment, use the unified microservice deployment system:
+生产环境请使用统一的微服务部署系统：
 ```bash
 cd ../deployment-scripts
 ./orchestration/deploy_all_services.sh --mode=production --services=auth-service
 ```
 
-## 📊 Architecture / 架构设计
+## 📊 架构设计
 
-### Data Models / 数据模型
-- **user_core** - Core user information with tenant isolation
-- **user_profile** - User profile and preferences  
-- **user_interests** - User interest profiling data
-- **user_app_usage** - Application usage tracking
+### 数据模型
+- **user_core** - 用户核心信息，支持租户隔离
+- **user_profile** - 用户资料和偏好设置
+- **user_interests** - 用户兴趣画像数据
+- **user_app_usage** - 应用使用记录
 
-### Authentication Methods / 认证方式
+### 认证方式
 
-**🇨🇳 China Region:**
-- WeChat Login (微信登录)
-- QQ Login (QQ登录)  
-- Phone + SMS (手机号+验证码)
+**🇨🇳 中国地区:**
+- 微信登录
+- QQ登录
+- 手机号+验证码
 
-**🌍 Global Region:**
+**🌍 海外地区:**
 - Google OAuth 2.0
-- Email + Password (邮箱+密码)
+- 邮箱+密码
 - Apple Sign-In (预留)
 
-### Multi-tenant Support / 多租户支持
-All core tables support `tenant_id` field for complete data isolation between tenants.
+### 多租户支持
+所有核心表都支持`tenant_id`字段，确保租户间的完整数据隔离。
 
-## 📚 API Usage / API使用
+## 📚 API使用
 
-### Authentication / 认证
+### 认证
 ```bash
-# Email/Password Login
+# 邮箱/密码登录
 POST /api/user/auth
 {
   "provider": "email",
@@ -103,7 +100,7 @@ POST /api/user/auth
   "region": "global"
 }
 
-# Phone Login (China)
+# 手机登录（中国）
 POST /api/user/auth
 {
   "provider": "phone",
@@ -116,13 +113,13 @@ POST /api/user/auth
 }
 ```
 
-### User Management / 用户管理
+### 用户管理
 ```bash
-# Get user profile
+# 获取用户资料
 GET /api/user/profile
 Headers: Authorization: Bearer <token>
 
-# Update user profile
+# 更新用户资料
 PUT /api/user/profile
 Headers: Authorization: Bearer <token>
 {
@@ -131,13 +128,13 @@ Headers: Authorization: Bearer <token>
 }
 ```
 
-### Full API Documentation / 完整API文档
-- Interactive API Docs: http://localhost:8001/docs
-- OpenAPI Spec: http://localhost:8001/openapi.json
+### 完整API文档
+- 交互式API文档: http://localhost:8001/docs
+- OpenAPI规范: http://localhost:8001/openapi.json
 
-## ⚙️ Configuration / 配置
+## ⚙️ 配置
 
-### Environment Variables / 环境变量
+### 环境变量
 ```bash
 # Database
 DATABASE_URL=postgresql://user:password@host:port/db
@@ -153,69 +150,69 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 MAX_REQUESTS_PER_MINUTE=60
 ```
 
-See `env.example` for complete configuration options.
+完整配置选项请参考`env.example`文件。
 
-## 🧪 Testing / 测试
+## 🧪 测试
 
 ```bash
-# Run tests
+# 运行测试
 pytest tests/
 
-# Health check
+# 健康检查
 curl http://localhost:8001/api/health
 
-# Load testing
+# 负载测试
 wrk -t12 -c400 -d30s http://localhost:8001/api/health
 ```
 
-## 📈 Monitoring / 监控
+## 📈 监控
 
-- **Health Check**: `/api/health` - Database and Redis connectivity
-- **Metrics**: `/api/metrics` - System performance metrics  
-- **Logs**: Application logs with structured JSON format
-- **Caching**: Redis-based caching with configurable TTL
+- **健康检查**: `/api/health` - 数据库和Redis连接状态
+- **指标**: `/api/metrics` - 系统性能指标
+- **日志**: 结构化JSON格式的应用日志
+- **缓存**: 基于Redis的可配置TTL缓存
 
-## 🔧 Development / 开发
+## 🔧 开发
 
-### Database Migrations / 数据库迁移
+### 数据库迁移
 ```bash
-# Create migration
+# 创建迁移
 alembic revision --autogenerate -m "Migration description"
 
-# Apply migrations
+# 应用迁移
 alembic upgrade head
 
-# Rollback
+# 回滚
 alembic downgrade -1
 ```
 
-### Cache Management / 缓存管理
+### 缓存管理
 ```bash
-# Clear user cache
+# 清理用户缓存
 redis-cli DEL "user:tenant_id:user_id:*"
 
-# Clear all cache
+# 清理所有缓存
 redis-cli FLUSHDB
 ```
 
-## 🤝 Contributing / 贡献
+## 🤝 贡献
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork 项目
+2. 创建功能分支 (`git checkout -b feature/amazing-feature`)
+3. 提交更改 (`git commit -m 'Add amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 打开 Pull Request
 
-## 📄 License / 许可证
+## 📄 许可证
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+本项目采用MIT许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
-## 📞 Support / 支持
+## 📞 支持
 
-- **Documentation**: [API Docs](http://localhost:8001/docs)
-- **Issues**: [GitHub Issues](https://github.com/superxabc/auth-service/issues)
-- **Health Check**: [Service Health](http://localhost:8001/api/health)
+- **文档**: [API文档](http://localhost:8001/docs)
+- **问题反馈**: [GitHub Issues](https://github.com/superxabc/auth-service/issues)
+- **健康检查**: [服务健康状态](http://localhost:8001/api/health)
 
 ---
 
-**Auth Service** - Building modern, scalable authentication microservices 🚀
+**Auth Service** - 构建现代化、可扩展的用户认证微服务 🚀
