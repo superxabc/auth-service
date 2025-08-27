@@ -1,30 +1,65 @@
-# Auth Service v0.2.0
+# Auth Service
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-green.svg)](https://fastapi.tiangolo.com/)
+[![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
+
+A scalable microservice for user authentication, management, and multi-tenant support built with FastAPI.
 
 一个可扩展的微服务，用于用户认证、管理和多租户支持。
 
-## 🚀 快速开始
+## ✨ Features
 
-### 开发环境
-1. **克隆仓库并安装依赖**:
+- 🔐 **Multiple Authentication Methods** - Support for various authentication approaches
+- 🔑 **JWT Token Management** - Secure token-based authentication
+- 🏢 **Multi-tenant Support** - Complete tenant isolation mechanism
+- 👤 **User Profile Management** - Comprehensive user data management
+- ⚡ **High Performance** - Redis caching and optimized database connections
+- 📊 **Monitoring & Logging** - Built-in health checks and metrics
+- 🛡️ **Security Features** - Rate limiting, CORS, input validation
+- 🐳 **Docker Ready** - Containerized deployment support
+
+## 🚀 Quick Start / 快速开始
+
+### Development Environment / 开发环境
+
+1. **Clone and install dependencies / 克隆仓库并安装依赖**:
    ```bash
-   git clone <repository>
+   git clone https://github.com/superxabc/auth-service.git
    cd auth-service
    pip install -r requirements.txt
    ```
 
-2. **配置环境变量**:
+2. **Configure environment / 配置环境变量**:
    ```bash
    cp env.example .env
+   # .env file contains sensible defaults for local development
    # .env 文件包含本地开发的默认配置，通常无需修改
    ```
 
-3. **启动服务**:
+3. **Start the service / 启动服务**:
    ```bash
-   # 开发模式
+   # Development mode / 开发模式
    uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
    ```
 
-### 生产部署
+4. **Access the API / 访问API**:
+   - API Documentation: http://localhost:8001/docs
+   - Health Check: http://localhost:8001/api/health
+
+### Docker Deployment / Docker部署
+
+```bash
+# Build and run with Docker
+docker build -t auth-service .
+docker run -p 8001:8001 auth-service
+
+# Or use Docker Compose
+docker compose up -d
+```
+
+### Production Deployment / 生产部署
 生产环境请使用统一的微服务部署系统：
 ```bash
 cd ../deployment-scripts
@@ -618,12 +653,25 @@ alembic downgrade -1
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
-## 📞 支持与联系
+## 🤝 Contributing / 贡献
 
-- **文档**: [API文档](http://localhost:8001/docs)
-- **监控**: [健康检查](http://localhost:8001/api/health)
-- **问题反馈**: 请提交 Issue
+We welcome contributions! Please feel free to submit a Pull Request.
+
+欢迎贡献代码！请随时提交 Pull Request。
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📞 Support / 支持与联系
+
+- **Documentation**: [API Docs](http://localhost:8001/docs) / [API文档](http://localhost:8001/docs)
+- **Health Check**: [Service Health](http://localhost:8001/api/health) / [健康检查](http://localhost:8001/api/health)
+- **Issues**: [GitHub Issues](https://github.com/superxabc/auth-service/issues) / 问题反馈
 
 ---
 
+**Auth Service** - Building modern, scalable authentication microservices 🚀  
 **Auth Service** - 构建现代化、可扩展的用户认证微服务 🚀
