@@ -9,14 +9,14 @@
 
 ## ✨ 功能特性
 
-- 🔐 **多种认证方式** - 邮箱/密码、手机/短信、微信、QQ、Google OAuth
+- 🔐 **多种认证方式** - 邮箱/密码、手机/短信、微信、QQ、谷歌OAuth
 - 🔑 **JWT令牌管理** - 安全的基于令牌的认证和刷新机制
 - 🏢 **多租户支持** - 完整的租户隔离和可配置配额
 - 👤 **用户资料管理** - 全面的用户数据和兴趣画像
 - ⚡ **高性能** - Redis缓存、连接池、异步操作
 - 📊 **监控与健康检查** - 内置指标、日志和健康检查端点
 - 🛡️ **安全特性** - 限流、CORS、输入验证、SQL注入防护
-- 🐳 **Docker就绪** - 支持Docker Compose的容器化部署
+- 🐳 **容器化就绪** - 支持Docker Compose的容器化部署
 
 ## 🚀 快速开始
 
@@ -77,9 +77,9 @@ cd ../deployment-scripts
 - 手机号+验证码
 
 **🌍 海外地区:**
-- Google OAuth 2.0
+- 谷歌OAuth 2.0
 - 邮箱+密码
-- Apple Sign-In (预留)
+- 苹果登录 (预留)
 
 ### 多租户支持
 所有核心表都支持`tenant_id`字段，确保租户间的完整数据隔离。
@@ -136,17 +136,17 @@ Headers: Authorization: Bearer <token>
 
 ### 环境变量
 ```bash
-# Database
+# 数据库
 DATABASE_URL=postgresql://user:password@host:port/db
 
-# Redis
+# Redis缓存
 REDIS_URL=redis://localhost:6379
 
-# JWT
+# JWT令牌
 SECRET_KEY=your-secret-key
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 
-# Rate Limiting
+# 限流配置
 MAX_REQUESTS_PER_MINUTE=60
 ```
 
@@ -201,7 +201,7 @@ redis-cli FLUSHDB
 2. 创建功能分支 (`git checkout -b feature/amazing-feature`)
 3. 提交更改 (`git commit -m 'Add amazing feature'`)
 4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 打开 Pull Request
+5. 打开拉取请求
 
 ## 📄 许可证
 
