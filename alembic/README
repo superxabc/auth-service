@@ -1,0 +1,23 @@
+# Alembic
+
+Alembic is a database migration tool for SQLAlchemy.
+
+This directory contains the migration scripts for your database.
+
+## Usage
+
+To generate a new migration script:
+
+    alembic revision --autogenerate -m "your message"
+
+To apply migrations:
+
+    alembic upgrade head
+
+To revert migrations:
+
+    alembic downgrade -1
+
+For more information, see the Alembic documentation:
+
+    https://alembic.sqlalchemy.org/en/latest/
