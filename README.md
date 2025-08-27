@@ -5,7 +5,7 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.111.0-green.svg)](https://fastapi.tiangolo.com/)
 [![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat&logo=docker&logoColor=white)](https://www.docker.com/)
 
-一个基于FastAPI构建的可扩展用户认证微服务，支持多租户和多种认证方式。
+基于FastAPI构建的可扩展用户认证微服务，支持多租户和多种认证方式。
 
 ## ✨ 功能特性
 
@@ -16,46 +16,38 @@
 - ⚡ **高性能** - Redis缓存、连接池、异步操作
 - 📊 **监控与健康检查** - 内置指标、日志和健康检查端点
 - 🛡️ **安全特性** - 限流、CORS、输入验证、SQL注入防护
-- 🐳 **容器化就绪** - 支持Docker Compose的容器化部署
 
 ## 🚀 快速开始
 
 ### 开发环境
 
-1. **克隆仓库并安装依赖**:
-   ```bash
-   git clone https://github.com/superxabc/auth-service.git
-   cd auth-service
-   pip install -r requirements.txt
-   ```
+```bash
+# 克隆并安装
+git clone https://github.com/superxabc/auth-service.git
+cd auth-service
+pip install -r requirements.txt
 
-2. **配置环境变量**:
-   ```bash
-   cp env.example .env
-   # 编辑.env文件配置数据库和Redis连接
-   ```
+# 配置环境
+cp env.example .env
 
-3. **启动服务**:
-   ```bash
-   # 开发模式
-   uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
-   ```
+# 启动服务
+uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
+```
 
-4. **访问API**:
-   - API文档: http://localhost:8001/docs
-   - 健康检查: http://localhost:8001/api/health
+**访问地址:**
+- API文档: http://localhost:8001/docs
+- 健康检查: http://localhost:8001/api/health
 
 ### Docker部署
 
 ```bash
-# 使用Docker构建和运行
+# 构建和运行
 docker build -t auth-service .
 docker run -p 8001:8001 auth-service
 ```
 
 ### 生产部署
 
-生产环境请使用统一的微服务部署系统：
 ```bash
 cd ../deployment-scripts
 ./orchestration/deploy_all_services.sh --mode=production --services=auth-service
@@ -63,144 +55,82 @@ cd ../deployment-scripts
 
 ## 📊 架构设计
 
-### 数据模型
-- **user_core** - 用户核心信息，支持租户隔离
-- **user_profile** - 用户资料和偏好设置
-- **user_interests** - 用户兴趣画像数据
-- **user_app_usage** - 应用使用记录
+**数据模型:**
+- user_core (用户核心信息，支持租户隔离)
+- user_profile (用户资料和偏好设置)
+- user_interests (用户兴趣画像数据)
+- user_app_usage (应用使用记录)
 
-### 认证方式
+**认证支持:**
+- 🇨🇳 **中国地区**: 微信、QQ、手机+验证码
+- 🌍 **海外地区**: 谷歌OAuth、邮箱+密码、苹果登录
 
-**🇨🇳 中国地区:**
-- 微信登录
-- QQ登录
-- 手机号+验证码
-
-**🌍 海外地区:**
-- 谷歌OAuth 2.0
-- 邮箱+密码
-- 苹果登录 (预留)
-
-### 多租户支持
-所有核心表都支持`tenant_id`字段，确保租户间的完整数据隔离。
+**多租户:** 所有核心表支持`tenant_id`字段，确保数据隔离。
 
 ## 📚 API使用
 
-### 认证
+### 核心接口
 ```bash
-# 邮箱/密码登录
+# 认证头
+Authorization: Bearer <token>
+
+# 用户认证
 POST /api/user/auth
 {
-  "provider": "email",
-  "credentials": {
-    "email": "user@example.com",
-    "password": "password123"
-  },
+  "provider": "email|phone|wechat|qq|google",
+  "credentials": {...},
   "tenant_id": "my-app",
-  "region": "global"
+  "region": "china|global"
 }
 
-# 手机登录（中国）
-POST /api/user/auth
-{
-  "provider": "phone",
-  "credentials": {
-    "phone": "13800138000",
-    "code": "123456"
-  },
-  "tenant_id": "my-app",
-  "region": "china"
-}
+# 用户管理
+GET /api/user/profile              # 获取资料
+PUT /api/user/profile              # 更新资料
+POST /api/user/verify              # 令牌验证
 ```
 
-### 用户管理
-```bash
-# 获取用户资料
-GET /api/user/profile
-Headers: Authorization: Bearer <token>
-
-# 更新用户资料
-PUT /api/user/profile
-Headers: Authorization: Bearer <token>
-{
-  "nickname": "新昵称",
-  "avatar_url": "https://example.com/avatar.jpg"
-}
-```
-
-### 完整API文档
-- 交互式API文档: http://localhost:8001/docs
-- OpenAPI规范: http://localhost:8001/openapi.json
+**完整API文档**: http://localhost:8001/docs
 
 ## ⚙️ 配置
 
-### 环境变量
+核心环境变量:
 ```bash
-# 数据库
 DATABASE_URL=postgresql://user:password@host:port/db
-
-# Redis缓存
 REDIS_URL=redis://localhost:6379
-
-# JWT令牌
 SECRET_KEY=your-secret-key
 ACCESS_TOKEN_EXPIRE_MINUTES=30
-
-# 限流配置
 MAX_REQUESTS_PER_MINUTE=60
 ```
 
-完整配置选项请参考`env.example`文件。
+详细配置请参考 `env.example` 文件。
 
-## 🧪 测试
+## 🧪 测试与开发
 
 ```bash
-# 运行测试
+# 测试
 pytest tests/
-
-# 健康检查
 curl http://localhost:8001/api/health
 
-# 负载测试
-wrk -t12 -c400 -d30s http://localhost:8001/api/health
+# 数据库迁移
+alembic upgrade head
+alembic revision --autogenerate -m "description"
+
+# 缓存管理
+redis-cli DEL "user:tenant_id:user_id:*"
 ```
 
 ## 📈 监控
 
 - **健康检查**: `/api/health` - 数据库和Redis连接状态
-- **指标**: `/api/metrics` - 系统性能指标
-- **日志**: 结构化JSON格式的应用日志
-- **缓存**: 基于Redis的可配置TTL缓存
-
-## 🔧 开发
-
-### 数据库迁移
-```bash
-# 创建迁移
-alembic revision --autogenerate -m "Migration description"
-
-# 应用迁移
-alembic upgrade head
-
-# 回滚
-alembic downgrade -1
-```
-
-### 缓存管理
-```bash
-# 清理用户缓存
-redis-cli DEL "user:tenant_id:user_id:*"
-
-# 清理所有缓存
-redis-cli FLUSHDB
-```
+- **系统指标**: `/api/metrics` - 性能监控数据
+- **结构化日志**: JSON格式，支持集中化收集
 
 ## 🤝 贡献
 
 1. Fork 项目
 2. 创建功能分支 (`git checkout -b feature/amazing-feature`)
 3. 提交更改 (`git commit -m 'Add amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
+4. 推送分支 (`git push origin feature/amazing-feature`)
 5. 打开拉取请求
 
 ## 📄 许可证
@@ -211,7 +141,6 @@ redis-cli FLUSHDB
 
 - **文档**: [API文档](http://localhost:8001/docs)
 - **问题反馈**: [GitHub Issues](https://github.com/superxabc/auth-service/issues)
-- **健康检查**: [服务健康状态](http://localhost:8001/api/health)
 
 ---
 
